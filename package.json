@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jagajastic/ecommerce-model/issues"
   },
-  "homepage": "https://github.com/jagajastic/ecommerce-model#readme"
+  "homepage": "https://github.com/jagajastic/ecommerce-model#readme",
+  "devDependencies": {
+    "jest": "^24.7.1"
+  }
 }
