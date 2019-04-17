@@ -31,19 +31,14 @@ createNewUser.prototype = {
         }
     },
     readSingleUser: function (id, access) {
-        if(typeof(id) === 'number' && access === 'user'){
-            db.users.map(user => {
-                console.log(user);
-                if(user.id === id){
-
-                }
-            })
+        if (typeof (id) === 'number' && access === 'user') {
+            db.users.map(user => user.id === id ? console.log(user): 'User not found');
+        }else if(typeof (id) === 'number' && access === 'admin') {
+            db.admin.map(admin => admin.id === id ? console.log(admin): 'Admin not found');
         }
-
-        console.log('read single user here');
     }
 };
 
-let lot = new createNewUser('lot', 'lot@gmail.com', 'password', 'admin');
-lot.saveNewUser();
-console.log(db);
+let mary = new createNewUser('mary', 'mary@gmail.com', 'password', 'user');
+mary.saveNewUser();
+createNewUser.prototype.readSingleUser(1, 'admin');
