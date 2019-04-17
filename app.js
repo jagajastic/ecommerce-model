@@ -35,6 +35,8 @@ createNewUser.prototype = {
             db.users.map(user => user.id === id ? console.log(user): 'User not found');
         }else if(typeof (id) === 'number' && access === 'admin') {
             db.admin.map(admin => admin.id === id ? console.log(admin): 'Admin not found');
+        } else{
+            console.log('Id or access is incorrect');
         }
     }
 };
