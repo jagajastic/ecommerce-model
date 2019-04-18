@@ -11,6 +11,43 @@ function createNewUser(username, email, password, access) {
 
 }
 
+function Admin(username, email, password, access) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.access = access;
+}
+
+Admin.prototype = Object.create(createNewUser.prototype);
+Admin.prototype = {
+    constructor: Admin,
+    readAllUser: function (access) {
+        if (access === 'user') {
+            console.log(db.users);
+        } else {
+            console.log('Invalid credentials!');
+        }
+    },
+    deleteSingleUser: function (id) {
+        if (typeof id === 'number') {
+            let foundIndex = db.users.findIndex(eachObject => eachObject.id === id);
+            let removedUser = db.users.splice(foundIndex, 1);
+            let json = JSON.stringify(db);
+            fs.writeFileSync('db.json', json, 'utf8');
+            console.log(removedUser);
+        } else {
+            console.log('Invalid credentials');
+        }
+
+    },
+    deleteAllUser: function () {
+        db.users = [];
+        let json = JSON.stringify(db);
+        fs.writeFileSync('db.json', json, 'utf8');
+        console.log(db);
+    }
+
+}
 createNewUser.prototype = {
     constructor: createNewUser,
     saveNewUser: function () {
@@ -74,11 +111,11 @@ createNewUser.prototype = {
         if (access === 'user' && search) {
             let searchResult = db.users.findIndex(eachObject => eachObject.username === search);
             console.log(searchResult);
-            return typeof db.users[searchResult] === 'object'? db.users[searchResult]: false;
-        } else if(access === 'admin' && search ){
+            return typeof db.users[searchResult] === 'object' ? db.users[searchResult] : false;
+        } else if (access === 'admin' && search) {
             let searchResult = db.admin.findIndex(eachObject => eachObject.username === search);
-            return typeof db.admin[searchResult] === 'object'? db.admin[searchResult]: false;
-        } else{
+            return typeof db.admin[searchResult] === 'object' ? db.admin[searchResult] : false;
+        } else {
             console.log('This record do not exist')
             return console.log('This record do not exist');
         }
@@ -86,8 +123,10 @@ createNewUser.prototype = {
     }
 };
 
-let mary = new createNewUser('mary', 'mary@gmail.com', 'password', 'user');
-mary.saveNewUser();
-createNewUser.prototype.readSingleUser(3, 'user');
-createNewUser.prototype.updateUser(1, 'admin', { username: 'on', email: 'on@gmail.com', password: 'onlaw' });
-createNewUser.prototype.searchUser('ossn', 'admin');
+// let mary = new createNewUser('mary', 'mary@gmail.com', 'password', 'user');
+// mary.saveNewUser();
+// createNewUser.prototype.readSingleUser(3, 'user');
+// createNewUser.prototype.updateUser(1, 'admin', { username: 'on', email: 'on@gmail.com', password: 'onlaw' });
+// createNewUser.prototype.searchUser('ossn', 'admin');
+Admin.prototype.deleteSingleUser(1);
+// Admin.prototype.deleteAllUser();
