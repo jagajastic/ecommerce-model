@@ -55,21 +55,34 @@ createNewUser.prototype = {
 
         let userToEdit = this.readSingleUser(id, access);
         if (userToEdit[0] === 'User not found :(') {
-            console.log('Such user do not exist');
             return 'Such user do not exist';
         } else if (userToEdit[1] === 'user') {
             object.id = id;
-            let foundIndex = db.users.findIndex(x => x.id == object.id);
+            let foundIndex = db.users.findIndex(eachObject => eachObject.id === object.id);
             db.users[foundIndex] = object;
             let json = JSON.stringify(db);
             fs.writeFileSync('db.json', json, 'utf8');
         } else if (userToEdit[1] === 'admin') {
             object.id = id;
-            let foundIndex = db.admin.findIndex(x => x.id == object.id);
+            let foundIndex = db.admin.findIndex(eachObject => eachObject.id === object.id);
             db.admin[foundIndex] = object;
             let json = JSON.stringify(db);
             fs.writeFileSync('db.json', json, 'utf8');
         }
+    },
+    searchUser: function (search, access) {
+        if (access === 'user' && search) {
+            let searchResult = db.users.findIndex(eachObject => eachObject.username === search);
+            console.log(searchResult);
+            return typeof db.users[searchResult] === 'object'? db.users[searchResult]: false;
+        } else if(access === 'admin' && search ){
+            let searchResult = db.admin.findIndex(eachObject => eachObject.username === search);
+            return typeof db.admin[searchResult] === 'object'? db.admin[searchResult]: false;
+        } else{
+            console.log('This record do not exist')
+            return console.log('This record do not exist');
+        }
+
     }
 };
 
@@ -77,3 +90,4 @@ let mary = new createNewUser('mary', 'mary@gmail.com', 'password', 'user');
 mary.saveNewUser();
 createNewUser.prototype.readSingleUser(1, 'admin');
 createNewUser.prototype.updateUser(1, 'admin', { username: 'on', email: 'on@gmail.com', password: 'onlaw' });
+createNewUser.prototype.searchUser('ossn', 'admin');
