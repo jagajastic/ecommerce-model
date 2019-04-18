@@ -1,24 +1,24 @@
 {
     "users": [
         {
-            "id": 1,
-            "username": "james",
-            "email": "james@gmail.com",
-            "password": "password"
+            "username": "on",
+            "email": "on@gmail.com",
+            "password": "onlaw",
+            "id": 1
         },
         {
-            "id": 2,
-            "username": "mary",
-            "email": "mary@gmail.com",
-            "password": "password"
+            "username": "kai",
+            "email": "kai@gmail.com",
+            "password": "kai",
+            "id": 2
         }
     ],
     "admin": [
         {
-            "id": 1,
-            "username": "lot",
-            "email": "lot@gmail.com",
-            "password": "password"
+            "username": "on",
+            "email": "on@gmail.com",
+            "password": "onlaw",
+            "id": 1
         }
     ],
     "store": []
