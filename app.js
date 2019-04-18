@@ -38,15 +38,15 @@ createNewUser.prototype = {
                 if (db.users[i].id === id) {
                     return [db.users[i], 'user'];
                 }
-                return 'User not found :(';
             }
+            return 'User not found :(';
         } else if (typeof id === 'number' && access === 'admin') {
             for (let i = 0; i < db.admin.length; i++) {
                 if (db.admin[i].id === id) {
                     return [db.admin[i], 'admin'];
                 }
-                return 'User not found :(';
             }
+            return 'User not found :(';
         } else {
             return 'Id/access is incorrect';
         }
@@ -88,6 +88,6 @@ createNewUser.prototype = {
 
 let mary = new createNewUser('mary', 'mary@gmail.com', 'password', 'user');
 mary.saveNewUser();
-createNewUser.prototype.readSingleUser(1, 'admin');
+createNewUser.prototype.readSingleUser(3, 'user');
 createNewUser.prototype.updateUser(1, 'admin', { username: 'on', email: 'on@gmail.com', password: 'onlaw' });
 createNewUser.prototype.searchUser('ossn', 'admin');
