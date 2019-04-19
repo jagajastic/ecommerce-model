@@ -1,9 +1,9 @@
 const fs = require('fs');
-const db = require('./db.json');
+const db = require('./db');
 
 console.log('Welcome to my ecommerce app\n Running...');
 
-function createNewUser(username, email, password, access) {
+function User(username, email, password, access) {
     this.username = username;
     this.email = email;
     this.password = password;
@@ -18,52 +18,48 @@ function Admin(username, email, password, access) {
     this.access = access;
 }
 
-Admin.prototype = Object.create(createNewUser.prototype);
+Admin.prototype = Object.create(User.prototype);
 Admin.prototype = {
     constructor: Admin,
     readAllUser: function (access) {
-        if (access === 'user') {
+        if (access === 'admin') {
             console.log(db.users);
         } else {
             console.log('Invalid credentials!');
         }
     },
-    deleteSingleUser: function (id) {
-        if (typeof id === 'number') {
+    deleteSingleUser: function (id, access) {
+        if (typeof id === 'number' && access === 'admin') {
             let foundIndex = db.users.findIndex(eachObject => eachObject.id === id);
             let removedUser = db.users.splice(foundIndex, 1);
-            let json = JSON.stringify(db);
-            fs.writeFileSync('db.json', json, 'utf8');
-            console.log(removedUser);
+            console.log(db.users);
         } else {
             console.log('Invalid credentials');
         }
 
     },
-    deleteAllUser: function () {
-        db.users = [];
-        let json = JSON.stringify(db);
-        fs.writeFileSync('db.json', json, 'utf8');
-        console.log(db);
+    deleteAllUser: function (access) {
+        if (access === 'admin') {
+            db.users = [];
+            console.log(db.users);
+        } else {
+            console.log('Invalid credentials')
+        }
     }
 
 }
-createNewUser.prototype = {
-    constructor: createNewUser,
+User.prototype = {
+    constructor: User,
     saveNewUser: function () {
 
         if (this.access === 'user') {
             let id = null;
             db.users.length ? id = db.users[db.users.length - 1].id + 1 : id = 1;
             db.users.push({ id: id, username: this.username, email: this.email, password: this.password });
-            let json = JSON.stringify(db);
-            fs.writeFileSync('db.json', json, 'utf8');
         } else if (this.access === 'admin') {
             let id = null;
             db.admin.length ? id = db.admin[db.admin.length - 1].id + 1 : id = 1;
             db.admin.push({ id: id, username: this.username, email: this.email, password: this.password });
-            let json = JSON.stringify(db);
-            fs.writeFileSync('db.json', json, 'utf8');
         } else {
             console.log('please access argument is needed :(');
         }
@@ -97,36 +93,37 @@ createNewUser.prototype = {
             object.id = id;
             let foundIndex = db.users.findIndex(eachObject => eachObject.id === object.id);
             db.users[foundIndex] = object;
-            let json = JSON.stringify(db);
-            fs.writeFileSync('db.json', json, 'utf8');
         } else if (userToEdit[1] === 'admin') {
             object.id = id;
             let foundIndex = db.admin.findIndex(eachObject => eachObject.id === object.id);
             db.admin[foundIndex] = object;
-            let json = JSON.stringify(db);
-            fs.writeFileSync('db.json', json, 'utf8');
         }
     },
     searchUser: function (search, access) {
+
         if (access === 'user' && search) {
             let searchResult = db.users.findIndex(eachObject => eachObject.username === search);
-            console.log(searchResult);
-            return typeof db.users[searchResult] === 'object' ? db.users[searchResult] : false;
-        } else if (access === 'admin' && search) {
-            let searchResult = db.admin.findIndex(eachObject => eachObject.username === search);
-            return typeof db.admin[searchResult] === 'object' ? db.admin[searchResult] : false;
+            if (db.users[searchResult] === undefined) {
+                return console.log('User do not exist');
+            }
+            return typeof db.users[searchResult];
         } else {
-            console.log('This record do not exist')
-            return console.log('This record do not exist');
+            return console.log('Invalid credentials');
         }
 
     }
 };
 
-// let mary = new createNewUser('mary', 'mary@gmail.com', 'password', 'user');
+// let mary = new User('mary', 'mary@gmail.com', 'password', 'user');
 // mary.saveNewUser();
-// createNewUser.prototype.readSingleUser(3, 'user');
-// createNewUser.prototype.updateUser(1, 'admin', { username: 'on', email: 'on@gmail.com', password: 'onlaw' });
-// createNewUser.prototype.searchUser('ossn', 'admin');
-Admin.prototype.deleteSingleUser(1);
-// Admin.prototype.deleteAllUser();
+// User.prototype.readSingleUser(3, 'user');
+// console.log(db);
+// User.prototype.updateUser(1, 'user', { username: 'on', email: 'on@gmail.com', password: 'onlaw' });
+// User.prototype.searchUser('mary', 'user');
+// Admin.prototype.deleteSingleUser(1, 'admin');
+// Admin.prototype.readAllUser('admin');
+// Admin.prototype.deleteAllUser('admin');
+// console.log(db);
+
+module.exports = User;
+module.exports = Admin;
