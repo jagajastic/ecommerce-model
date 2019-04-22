@@ -1,5 +1,5 @@
-const db = require('./db');
-const User = require('./user');
+const db = require('../db');
+const User = require('../user/user');
 
 function Order() { }
 
@@ -87,26 +87,5 @@ Order.orderAction = {
         }
     }
 }
-
-// let mary = new User('mary', 'mary@gmail.com', 'pass', 'user');
-// mary.saveNewUser();
-// // console.log(db.users);
-// console.log(Order.createOrder(1, ['egg', 'bread', 'sadin']));
-// console.log(Order.createOrder(1, ['cassava', 'coco', 'abacha']));
-// console.log(db.store);
-// console.log(Order.orderAction.readOrderById());
-// console.log(Order.orderAction.readAllOrder());
-
-// console.log(Order.orderAction.createOrder(1, ['cabin', 'milk', 'coke']));
-// console.log(db.store);
-// // setTimeout(t, 9000);
-// console.log(Order.orderAction.updateOrder(8, {
-//     id:1,
-//     user_id: 1,
-//     dateOfOrder: '2019-3-1',
-//     timeOfOrder: '9:19:11',
-//     product: ['kunu', 'qwaba', 'donkuwa']
-// }, 'admin'));
-// console.log(db.store);
 
 module.exports = Order;

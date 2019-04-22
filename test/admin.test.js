@@ -1,5 +1,5 @@
-const Admin = require('./admin')
-const db = require('./db');
+const Admin = require('../admin/admin')
+const db = require('../db');
 
 describe('Test Read all user method', function () {
     test('Test read all user with admin access ', function () {

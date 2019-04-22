@@ -1,6 +1,6 @@
 
-const Order = require('./order');
-const User = require('./user');
+const Order = require('../order/order');
+const User = require('../user/user');
 
 describe('Test Create new order method', function () {
     test('Test create new order', function () {

@@ -1,5 +1,5 @@
-const User = require('./user');
-const db = require('./db');
+const User = require('../user/user');
+const db = require('../db');
 
 
 function Admin(username, email, password, access) {

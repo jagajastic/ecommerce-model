@@ -1,4 +1,4 @@
-const User = require('./user');
+const User = require('../user/user');
 
 describe('Test user creation method', function () {
     test('Test user creation if it work correctly', function () {
