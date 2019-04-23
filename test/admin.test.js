@@ -109,3 +109,42 @@ describe('Test Delete All user method', function () {
         expect(adminDeleteAllUser).toEqual('Invalid credentials');
     });
 });
+
+describe('Test Update user method', function () {
+    test('Test Update user with credentials', function () {
+        let mary = new Admin('mary', 'mary@gmail.com', 'password', 'user');
+        mary.saveNewUser();
+        let updateResult = mary.updateUser(1, 'user',
+            { username: 'on', email: 'on@gmail.com', password: 'password' });
+        expect(updateResult).toBe(1);
+    });
+});
+
+describe('Test update User method', function () {
+    test('Test update user with incorrect id', function () {
+        let mary = new Admin('mary', 'mary@gmail.com', 'password');
+        mary.saveNewUser();
+        let updateResult = mary.updateUser(9, 'user',
+            { username: 'on', email: 'on@gmail.com', password: 'password' });
+        expect(updateResult).toBe('Such user do not exist or Invalid credentials');
+    });
+});
+
+describe('Test update User method', function () {
+    test('Test update user with string as id', function () {
+        let mary = new Admin('mary', 'mary@gmail.com', 'password');
+        mary.saveNewUser();
+        let updateResult = mary.updateUser('9', 'user',
+            { username: 'on', email: 'on@gmail.com', password: 'password' });
+        expect(updateResult).toBe('Such user do not exist or Invalid credentials');
+    });
+});
+
+describe('Test update User method', function () {
+    test('Test update user with no user data', function () {
+        let mary = new Admin('mary', 'mary@gmail.com', 'password');
+        mary.saveNewUser();
+        let updateResult = mary.updateUser(1, 'user');
+        expect(updateResult).toBe('Updated value is empty');
+    });
+});
