@@ -70,6 +70,16 @@ describe('Test update User method', function () {
 });
 
 describe('Test update User method', function () {
+    test('Test update user with correct id, and data for admin', function () {
+        let mary = new User('mary', 'mary@gmail.com', 'password', 'admin');
+        mary.saveNewUser();
+        let updateResult = mary.updateUser(1, 'admin',
+            { username: 'on', email: 'on@gmail.com', password: 'password' });
+        expect(updateResult).toBe(1);
+    });
+});
+
+describe('Test update User method', function () {
     test('Test update user with incorrect id', function () {
         let mary = new User('mary', 'mary@gmail.com', 'password');
         mary.saveNewUser();
@@ -120,6 +130,17 @@ describe('Test search user method', function () {
 });
 
 describe('Test search user method', function () {
+    test('Test search with empty string', function () {
+        let mary = new User('mary', 'mary@gmail.com', 'password', 'user');
+        mary.saveNewUser();
+        let tolu = new User('tolu', 'tolu@gmail.com', 'password', 'user');
+        tolu.saveNewUser();
+        let updateResult = tolu.searchUser('');
+        expect(updateResult).toBe('Invalid credentials');
+    });
+});
+
+describe('Test search user method', function () {
     test('Test search with data that do not exist', function () {
         let mary = new User('mary', 'mary@gmail.com', 'password', 'user');
         mary.saveNewUser();
@@ -158,3 +179,4 @@ describe('Test search user method', function () {
         expect(updateResult).toBeFalsy();
     });
 });
+
