@@ -3,6 +3,15 @@ const Order = require('../order/order');
 const User = require('../user/user');
 
 describe('Test Create new order method', function () {
+    test('Test create new order when user do not exist', function () {
+        let mary = new User('mary', 'mary@gmail.com', 'pass', 'user');
+        mary.saveNewUser();
+        let createOrder = Order.createOrder(50, ['egg', 'bread', 'sadin']);
+        expect(createOrder).toBe('User do not exist :(');
+    });
+});
+
+describe('Test Create new order method', function () {
     test('Test create new order', function () {
         let mary = new User('mary', 'mary@gmail.com', 'pass', 'user');
         mary.saveNewUser();
@@ -15,7 +24,7 @@ describe('Test Create new order method', function () {
     test('Test create new order with no data', function () {
         let mary = new User('mary', 'mary@gmail.com', 'pass', 'user');
         mary.saveNewUser();
-        let createOrder = Order.createOrder(1);
+        let createOrder = Order.createOrder();
         expect(createOrder).toBe('Invalid credentials!');
     });
 });
@@ -36,6 +45,16 @@ describe('Test Read order by Id method', function () {
         Order.createOrder(1, ['egg', 'bread', 'sadin']);
         let readOrderById = Order.orderAction.readOrderById(1, 'admin');
         expect(readOrderById).toBeDefined();
+    });
+});
+
+describe('Test Read order by Id method', function () {
+    test('Test Read order with id that do not exist', function () {
+        let mary = new User('mary', 'mary@gmail.com', 'pass', 'user');
+        mary.saveNewUser();
+        Order.createOrder(1, ['egg', 'bread', 'sadin']);
+        let readOrderById = Order.orderAction.readOrderById(9, 'admin');
+        expect(readOrderById).toBe('Item do not exist!');
     });
 });
 
